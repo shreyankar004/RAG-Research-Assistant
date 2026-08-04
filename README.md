@@ -196,6 +196,4 @@ Since Groq LLM generates the actual research content, embeddings only need to fi
 
 ---
 
-## Author
 
-**Anu** · [github.com/anurajput06](https://github.com/anurajput06)
