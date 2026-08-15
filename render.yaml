@@ -1,0 +1,43 @@
+# Exported from Render on 2026-08-15T04:45:52Z
+version: "1"
+projects:
+- name: My project
+  environments:
+  - name: Production
+    services:
+    - type: web
+      name: RAG-Research-Assistant
+      runtime: python
+      repo: https://github.com/shreyankar004/RAG-Research-Assistant
+      plan: free
+      envVars:
+      - key: LLM_TIMEOUT_SECONDS
+        sync: false
+      - key: LLM_MAX_TOKENS
+        sync: false
+      - key: CHUNK_OVERLAP
+        sync: false
+      - key: CHUNK_SIZE
+        sync: false
+      - key: TFIDF_MAX_FEATURES
+        sync: false
+      - key: GEMINI_MODEL
+        sync: false
+      - key: MISTRAL_MODEL
+        sync: false
+      - key: GROQ_MODEL
+        sync: false
+      - key: TAVILY_API_KEY
+        sync: false
+      - key: MISTRAL_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      region: virginia
+      buildCommand: pip install -r requirements.txt
+      startCommand: streamlit run app.py --server.port $PORT --server.address 0.0.0.0
+        --server.headless true --server.enableCORS false --server.enableXsrfProtection
+        false
+      autoDeployTrigger: commit
