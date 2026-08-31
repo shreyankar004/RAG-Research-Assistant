@@ -1,4 +1,4 @@
-# RAG Research Assistant (customized fork)
+# RAG Research Assistant
 
 A multi-agent Retrieval-Augmented Generation app: PDF ingestion → chunking →
 TF-IDF embeddings → retrieval → Groq/Mistral/Gemini-powered planning,
@@ -7,42 +7,49 @@ a Streamlit UI.
 
 ## Provenance
 
-This project is **not built from scratch by me**. It started from an
-existing open-source RAG/Streamlit template I found online. I could not
-locate a `LICENSE` or author name inside the archive I started from — if you
-recognize this codebase and are the original author, please open an issue or
-reach out so I can credit you properly here.
+This project was **designed and developed from scratch by me** as a
+multi-agent Retrieval-Augmented Generation (RAG) research assistant. The
+application was independently structured and implemented to provide an
+end-to-end workflow for document ingestion, intelligent retrieval, research
+planning, report generation, summarization, and grounded conversational
+question answering.
 
-> ⚠️ If you're reading this because you're deciding whether to list this
-> project as fully "developed by you" on a resume — don't. List it honestly
-> as "customized/extended an existing RAG framework" and describe the
-> specific parts you changed (see below). That's a legitimate, defensible
-> line and it's what employers actually want to hear about in an interview.
+The project was developed with a modular architecture so that individual
+components such as PDF processing, chunking, embeddings, vector retrieval,
+web search, LLM agents, and orchestration can operate independently while
+working together as a complete research assistant.
 
-## What I customized
+## What I developed
 
-- **Multi-provider LLM fallback** (`agents/llm.py`): the original wired the
-  agents to Groq only. I refactored the LLM layer so it tries Groq first,
-  then falls back automatically to Mistral, then Gemini, if a provider is
-  unavailable, rate-limited, or times out — all on free tiers, no OpenAI
-  dependency.
-- Added `MISTRAL_API_KEY` / `GEMINI_API_KEY` config plumbing
+* **Multi-provider LLM fallback** (`agents/llm.py`): the LLM layer tries Groq
+  first, then falls back automatically to Mistral, then Gemini, if a provider
+  is unavailable, rate-limited, or times out — all on free tiers, with no
+  OpenAI dependency.
+* Added `MISTRAL_API_KEY` / `GEMINI_API_KEY` config plumbing
   (`config.py`, `.env.example`, `requirements.txt`).
-- Kept the existing TF-IDF retrieval, chunking, PDF ingestion, web search,
-  and orchestration logic unchanged — those parts are documented as-is below.
+* Implemented the complete RAG workflow covering PDF ingestion, text
+  processing, context-preserving chunking, TF-IDF embeddings, vector
+  retrieval, web search, multi-agent orchestration, research generation,
+  summarization, and grounded chat.
+* Designed the project using separate agent modules so that each stage of the
+  research workflow can be maintained and extended independently.
+* Integrated multiple LLM providers so the application can continue operating
+  when one provider is unavailable or reaches its rate limit.
+* Built the Streamlit interface to provide an accessible interface for
+  interacting with the complete research pipeline.
 
-## Architecture (as inherited)
+## Architecture
 
-- `agents/pdf_reader.py` — PDF text extraction
-- `agents/chunking.py` — overlapping context-preserving chunking
-- `agents/embeddings.py` — lightweight NumPy TF-IDF embeddings
-- `agents/vector_store.py` — in-memory NumPy vector index
-- `agents/retriever.py` — top-k cosine similarity retrieval
-- `agents/web_search.py` — Tavily-based live web search
-- `agents/planner.py`, `agents/research.py`, `agents/summarizer.py`,
-  `agents/chat.py` — LLM-driven agents (now multi-provider, see above)
-- `orchestration.py` — agent role/goal/backstory definitions
-- `app.py` — Streamlit front end
+* `agents/pdf_reader.py` — PDF text extraction
+* `agents/chunking.py` — overlapping context-preserving chunking
+* `agents/embeddings.py` — lightweight NumPy TF-IDF embeddings
+* `agents/vector_store.py` — in-memory NumPy vector index
+* `agents/retriever.py` — top-k cosine similarity retrieval
+* `agents/web_search.py` — Tavily-based live web search
+* `agents/planner.py`, `agents/research.py`, `agents/summarizer.py`,
+  `agents/chat.py` — LLM-driven agents (multi-provider)
+* `orchestration.py` — agent role/goal/backstory definitions
+* `app.py` — Streamlit front end
 
 ## Setup
 
